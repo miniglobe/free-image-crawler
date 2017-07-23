@@ -9,3 +9,6 @@ class PakutasoSpider(scrapy.Spider):
 
     def parse(self, response):
         pass
+
+    def parse_dir_contents(self, response):
+        pass
