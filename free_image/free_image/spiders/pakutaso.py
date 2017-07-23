@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-
+from free_image.items import FreeImageItem
 
 class PakutasoSpider(scrapy.Spider):
     name = 'pakutaso'
@@ -12,6 +12,7 @@ class PakutasoSpider(scrapy.Spider):
 
         image_urls = [anchor.css("a::attr(href)").extract_first() for anchor in anchors if anchor.css("a::attr(data-category)").extract()]
         for image_url in image_urls:
+            image_url = response.urljoin(image_url)
             yield scrapy.Request(image_url, callback=self.parse_dir_contents)
 
         next_pages = [anchor.css("a::attr(href)").extract_first() for anchor in anchors if not anchor.css("a::attr(data-category)").extract()]
@@ -22,4 +23,5 @@ class PakutasoSpider(scrapy.Spider):
     
     def parse_dir_contents(self, response):
         items = FreeImageItem()
+        items['origin_url'] = response.url
         return items

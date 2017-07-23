@@ -11,4 +11,5 @@ import scrapy
 class FreeImageItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    origin_url = scrapy.Field()
     image_url = scrapy.Field()
